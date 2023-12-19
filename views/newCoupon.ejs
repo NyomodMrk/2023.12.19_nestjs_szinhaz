@@ -9,13 +9,23 @@
     <script src='main.js'></script>
 </head>
 <body>
-    <p><%= message %></p>
     <div class="topnav">
         <a class="active" href="./index.ejs">Főoldal</a>
         <a href="./newCoupon.ejs">Új kupon készítése</a>
       </div>
-    <form>
-
+    <form method="Post"> 
+        <label>
+            <p>Adja meg az előadás címét:</p>
+            <input  type="text" name="cim" id="cim"> <br>
+        </label>
+        <label>
+            <p>Hány százalékos a kedvezmény?</p>
+            <input type="number" min="1" max="99" name="kedvezmeny" id="kedvezmeny"><br>
+        </label>
+        <label>
+            <p>Adja meg a kedvezmény kódkát</p>
+            <input type="text" name="kod" id="kod">
+        </label>
     </form>
 </body>
 </html>

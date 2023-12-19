@@ -1,6 +1,7 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Render, Post } from '@nestjs/common';
 import * as mysql from 'mysql2';
 import { AppService } from './app.service';
+import { newcouponDto } from './newcouponDTO';
 
 const conn = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -18,5 +19,24 @@ export class AppController {
   @Render('index')
   index() {
     return { message: 'Welcome to the homepage' };
+  }
+
+  @Get('/newCoupon')
+  @Render('newCoupon')
+  newCoupon() {
+    return { title: 'Új kupon felvétele' };
+  }
+
+  @Post('/newCoupon')
+  async newCoupon(@Body() newcoupon: newcouponDto) {
+    const title = newcoupon.title;
+    const percentage = newcoupon.percentage;
+    const kod = newcoupon.kod;
+    const [ adatok ] = await conn.execute(
+      'INSERT INTO jegyek (title, percentage, kod) VALUES (?, ?, ?)',
+      [title, percentage, kod],
+    );
+    console.log(adatok);
+    return {};
   }
 }
